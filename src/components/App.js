@@ -1,37 +1,12 @@
-import headerLogoPath from './images/logo.svg';
+import Header from './Header.js';
+import Main from './Main.js';
 
 function App() {
   return (
     <body className="page">
     <div className="page__container">
-      <header className="header">
-        <img src={headerLogoPath} alt="Логотип сайта - слово Mesto" className="header__logo"/>
-      </header>
-      <main className="content">
-        <section className="profile section">
-          <div className="profile__avatar-container">
-            <img className="profile__avatar"/>
-            <div className="profile__avatar-overlay">
-              <button className="profile__avatar-edit-button" type="button"></button>
-            </div>
-          </div>
-          <div className="profile__personal-data">
-            <div className="profile__name-editor">
-              <h1 className="profile__name"></h1>
-              <button className="profile__edit-button" type="button"></button>
-            </div>
-            <p className="profile__description"></p>
-          </div>
-          <button className="profile__add-button" type="button"></button>
-        </section>
-        <section className="places section">
-          <ul className="places__list"></ul>
-        </section>
-        <footer className="footer section">
-          <p className="footer__copyright">&copy; 2022 Mesto Russia</p>
-        </footer>
-      </main>
-
+      <Header />
+      <Main />
       <div className="popup popup_type_profile">
         <div className="popup__container popup__container_type_user-input">
           <button className="popup__close-button" type="button"></button>
