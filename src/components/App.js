@@ -65,20 +65,6 @@ function App() {
           <button type="submit" className="popup__submit-button">Сохранить</button>
         </PopupWithForm>
       </div>
-
-      <template className="template">
-        <li className="place">
-          <img className="place__pic"/>
-          <button className="place__remove-button" type="button"></button>
-          <div className="place__sign">
-            <h2 className="place__title"></h2>
-            <div className="place__like-area">
-              <button className="place__like-button" type="button"></button>
-              <p className="place__like-counter"></p>
-            </div>
-          </div>
-        </li>
-      </template>
     </div>
   );
 }
