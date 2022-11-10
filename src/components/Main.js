@@ -1,5 +1,6 @@
 import React from "react";
 import Footer from "./Footer.js";
+import Card from "./Card";
 import {api} from "../utils/Api.js";
 
 function Main(props) {
@@ -48,19 +49,7 @@ function Main(props) {
       </section>
       <section className="places section">
         <ul className="places__list">
-          {cards.map(card => (
-            <li className="place" key={card.id}>
-              <img className="place__pic" style={{backgroundImage: `url(${card.link})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}/>
-              <button className="place__remove-button" type="button"></button>
-              <div className="place__sign">
-                <h2 className="place__title">{card.title}</h2>
-                <div className="place__like-area">
-                  <button className="place__like-button" type="button"></button>
-                  <p className="place__like-counter">{card.likes.length}</p>
-                </div>
-              </div>
-            </li>
-          ))}
+          {cards.map(({id, ...card}) => <Card key={id} {...card}/>)}
         </ul>
       </section>
       <Footer/>
