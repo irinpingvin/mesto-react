@@ -8,6 +8,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -21,17 +22,22 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard(null);
   }
 
   return (
     <div className="page">
       <div className="page__container">
         <Header/>
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}/>
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}/>
         <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
           <input type="text" name="name" required className="popup__input popup__input_text_name" id="name-input"
                  minLength="2" maxLength="40"/>
@@ -52,7 +58,7 @@ function App() {
           <button type="submit" className="popup__submit-button">Создать</button>
         </PopupWithForm>
 
-        <ImagePopup/>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
         <PopupWithForm title='Вы уверены?' name='confirm'>
           <button type="submit" className="popup__submit-button">Да</button>

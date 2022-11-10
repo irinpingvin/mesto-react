@@ -1,10 +1,16 @@
-function ImagePopup() {
-  return(
-    <div className="popup popup_type_image">
+function ImagePopup({card, onClose}) {
+  const isCard = !!card;
+
+  return (
+    <div className={`popup popup_type_image ${isCard ? 'popup_opened' : ''}`}>
       <div className="popup__container">
-        <button className="popup__close-button"></button>
+        <button className="popup__close-button" onClick={onClose}></button>
         <figure className="popup__figure">
-          <img className="popup__picture"/>
+          {isCard ? (
+            <img className="popup__picture" src={card.link} />
+          ) : (
+            <img className="popup__picture"/>
+          )}
           <figcaption className="popup__caption"></figcaption>
         </figure>
       </div>
