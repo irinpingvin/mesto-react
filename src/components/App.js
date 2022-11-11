@@ -3,6 +3,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from "./ImagePopup.js";
+import Footer from "./Footer";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -38,37 +39,33 @@ function App() {
       <div className="page__container">
         <Header/>
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}/>
-        <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        <Footer/>
+        <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText='Сохранить'>
           <input type="text" name="name" required className="popup__input popup__input_text_name" id="name-input"
                  minLength="2" maxLength="40"/>
-          <span className="popup__input-error name-input-error"></span>
+          <span className="popup__input-error name-input-error"/>
           <input type="text" name="info" required className="popup__input popup__input_text_info" id="info-input"
                  minLength="2" maxLength="200"/>
-          <span className="popup__input-error info-input-error"></span>
-          <button type="submit" className="popup__submit-button">Сохранить</button>
+          <span className="popup__input-error info-input-error"/>
         </PopupWithForm>
 
-        <PopupWithForm title='Новое место' name='card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <PopupWithForm title='Новое место' name='card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText='Создать'>
           <input type="text" name="title" required className="popup__input popup__input_text_name"
                  id="card-name-input" placeholder="Название" minLength="2" maxLength="30"/>
-          <span className="popup__input-error name-input-error card-name-input-error"></span>
+          <span className="popup__input-error name-input-error card-name-input-error"/>
           <input type="url" name="link" required className="popup__input popup__input_text_info"
                  id="card-link-input" placeholder="Ссылка на картинку"/>
-          <span className="popup__input-error info-input-error card-link-input-error"></span>
-          <button type="submit" className="popup__submit-button">Создать</button>
+          <span className="popup__input-error info-input-error card-link-input-error"/>
         </PopupWithForm>
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
-        <PopupWithForm title='Вы уверены?' name='confirm'>
-          <button type="submit" className="popup__submit-button">Да</button>
-        </PopupWithForm>
+        <PopupWithForm title='Вы уверены?' name='confirm' buttonText='Да' />
 
-        <PopupWithForm title='Обновить аватар' name='avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        <PopupWithForm title='Обновить аватар' name='avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText='Сохранить'>
           <input type="url" name="avatar" required className="popup__input popup__input_text_info"
                  id="avatar-url-input" placeholder="Ссылка на картинку"/>
-          <span className="popup__input-error info-input-error avatar-url-input-error"></span>
-          <button type="submit" className="popup__submit-button">Сохранить</button>
+          <span className="popup__input-error info-input-error avatar-url-input-error"/>
         </PopupWithForm>
       </div>
     </div>

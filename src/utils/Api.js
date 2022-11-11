@@ -1,13 +1,11 @@
-import {API_CONFIG} from "./constants.js";
+import {BASE_URL, HEADERS} from "./constants.js";
 
 class Api {
-  #userUrl;
-  #cardsUrl;
+  #baseUrl;
   #headers;
 
-  constructor({userUrl, cardsUrl, headers}) {
-    this.#userUrl = userUrl;
-    this.#cardsUrl = cardsUrl;
+  constructor(baseUrl, headers) {
+    this.#baseUrl = baseUrl;
     this.#headers = headers;
   }
 
@@ -20,11 +18,11 @@ class Api {
   }
 
   getUserInfo() {
-    return this.#handleServerResponse(fetch(this.#userUrl, {headers: this.#headers}));
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/users/me`, {headers: this.#headers}));
   }
 
   editUserInfo(userInfo) {
-    return this.#handleServerResponse(fetch(this.#userUrl, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.#headers,
       body: JSON.stringify(userInfo)
@@ -32,7 +30,7 @@ class Api {
   }
 
   editUserAvatar(avatarInfo) {
-    return this.#handleServerResponse(fetch(`${this.#userUrl}/avatar`, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.#headers,
       body: JSON.stringify(avatarInfo)
@@ -40,11 +38,11 @@ class Api {
   }
 
   getCards() {
-    return this.#handleServerResponse(fetch(this.#cardsUrl, {headers: this.#headers}));
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/cards`, {headers: this.#headers}));
   }
 
   addCard(cardInfo) {
-    return this.#handleServerResponse(fetch(this.#cardsUrl, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/cards`, {
       method: 'POST',
       headers: this.#headers,
       body: JSON.stringify(cardInfo)
@@ -52,25 +50,25 @@ class Api {
   }
 
   removeCard(id) {
-    return this.#handleServerResponse(fetch(`${this.#cardsUrl}/${id}`, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: this.#headers
     }));
   }
 
   likeCard(id) {
-    return this.#handleServerResponse(fetch(`${this.#cardsUrl}/${id}/likes`, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this.#headers
     }));
   }
 
   dislikeCard(id) {
-    return this.#handleServerResponse(fetch(`${this.#cardsUrl}/${id}/likes`, {
+    return this.#handleServerResponse(fetch(`${this.#baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this.#headers
     }));
   }
 }
 
-export const api = new Api(API_CONFIG);
+export const api = new Api(BASE_URL, HEADERS);

@@ -7,13 +7,10 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 };
 
-const API_CONFIG = {
-  userUrl: 'https://mesto.nomoreparties.co/v1/cohort-52/users/me',
-  cardsUrl: 'https://mesto.nomoreparties.co/v1/cohort-52/cards',
-  headers: {
-    authorization: '16f6b6a9-a8f1-4c03-8800-2744e7cbf369',
-    'Content-Type': 'application/json'
-  }
+const BASE_URL = 'https://mesto.nomoreparties.co/v1/cohort-52';
+const HEADERS = {
+  authorization: '16f6b6a9-a8f1-4c03-8800-2744e7cbf369',
+  'Content-Type': 'application/json'
 }
 
-export {validationConfig, API_CONFIG};
+export {validationConfig, BASE_URL, HEADERS};
