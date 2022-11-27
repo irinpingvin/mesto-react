@@ -67,6 +67,13 @@ function App() {
     }
   }
 
+  function handleCardDelete(card) {
+    api.removeCard(card._id)
+      .then(() => {
+        setCards(cards.filter(element => element._id !== card._id))
+      })
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -82,7 +89,7 @@ function App() {
             <Header/>
             <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
                   onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}
-                  onCardLike={handleCardLike} />
+                  onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
             <Footer/>
             <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen}
                            onClose={closeAllPopups} buttonText='Сохранить'>

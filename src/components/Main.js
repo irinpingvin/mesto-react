@@ -11,7 +11,11 @@ function Main(props) {
     <main className="content">
       <section className="profile section">
         <div className="profile__avatar-container">
-          <div className="profile__avatar" style={{backgroundImage: `url(${userInfo.avatar})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}/>
+          <div className="profile__avatar" style={{
+            backgroundImage: `url(${userInfo.avatar})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}/>
           <div className="profile__avatar-overlay">
             <button className="profile__avatar-edit-button" type="button" onClick={props.onEditAvatar}/>
           </div>
@@ -27,7 +31,8 @@ function Main(props) {
       </section>
       <section className="places section">
         <ul className="places__list">
-          {cards.map((card) => <Card key={card._id} card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike}/>)}
+          {cards.map((card) => <Card key={card._id} card={card} onCardClick={props.onCardClick}
+                                     onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>)}
         </ul>
       </section>
     </main>
