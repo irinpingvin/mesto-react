@@ -1,24 +1,11 @@
 import React from "react";
 import Card from "./Card";
-import {api} from "../utils/Api.js";
 import {CurrentUserContext} from "../contexts/currentUser/CurrentUserContext";
+import {CardsContext} from "../contexts/cards/CardsContext";
 
 function Main(props) {
-  const [cards, setCards] = React.useState([]);
   const userInfo = React.useContext(CurrentUserContext);
-
-  React.useEffect(() => {
-    api.getCards()
-      .then(cardsInfo => {
-        setCards(cardsInfo.map((card) => ({
-          id: card._id,
-          link: card.link,
-          title: card.name,
-          likes: card.likes
-        })))
-      })
-      .catch(error => console.log(error));
-  }, [])
+  const cards = React.useContext(CardsContext);
 
   return (
     <main className="content">
