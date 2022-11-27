@@ -27,13 +27,7 @@ function App() {
       .then(data => {
         const [userInfo, cardsInfo] = data;
         setCurrentUser(userInfo);
-        setCards(cardsInfo.map((card) => ({
-          id: card._id,
-          link: card.link,
-          title: card.name,
-          likes: card.likes,
-          owner: card.owner
-        })))
+        setCards(cardsInfo);
       })
       .catch(error => console.log(error));
   }, []);
@@ -54,6 +48,25 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(element => element._id === currentUser._id);
+
+    if (isLiked) {
+      api.dislikeCard(card._id)
+        .then((newCard) => {
+          setCards(cards.map((card) => card._id === newCard._id ? newCard : card));
+        })
+        .catch(error => console.log(error));
+
+    } else {
+      api.likeCard(card._id)
+        .then((newCard) => {
+          setCards(cards.map((card) => card._id === newCard._id ? newCard : card));
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -68,7 +81,8 @@ function App() {
           <div className="page__container">
             <Header/>
             <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}/>
+                  onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}
+                  onCardLike={handleCardLike} />
             <Footer/>
             <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen}
                            onClose={closeAllPopups} buttonText='Сохранить'>
