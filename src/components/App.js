@@ -4,6 +4,7 @@ import Main from './Main.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from "./ImagePopup.js";
 import Footer from "./Footer";
+import EditProfilePopup from './EditProfilePopup';
 import {api} from '../utils/Api';
 import {CurrentUserContext} from '../contexts/currentUser/CurrentUserContext';
 import {CardsContext} from "../contexts/cards/CardsContext";
@@ -91,15 +92,7 @@ function App() {
                   onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}
                   onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
             <Footer/>
-            <PopupWithForm title='Редактировать профиль' name='profile' isOpen={isEditProfilePopupOpen}
-                           onClose={closeAllPopups} buttonText='Сохранить'>
-              <input type="text" name="name" required className="popup__input popup__input_text_name" id="name-input"
-                     minLength="2" maxLength="40"/>
-              <span className="popup__input-error name-input-error"/>
-              <input type="text" name="info" required className="popup__input popup__input_text_info" id="info-input"
-                     minLength="2" maxLength="200"/>
-              <span className="popup__input-error info-input-error"/>
-            </PopupWithForm>
+            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
             <PopupWithForm title='Новое место' name='card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
                            buttonText='Создать'>
