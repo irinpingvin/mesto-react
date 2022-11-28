@@ -27,6 +27,9 @@ function EditProfilePopup(props) {
       name,
       about: description,
     });
+
+    setName(currentUser.name);
+    setDescription(currentUser.about);
   }
 
   return (

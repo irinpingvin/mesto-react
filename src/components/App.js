@@ -6,6 +6,7 @@ import ImagePopup from "./ImagePopup.js";
 import Footer from "./Footer";
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import {api} from '../utils/Api';
 import {CurrentUserContext} from '../contexts/currentUser/CurrentUserContext';
 import {CardsContext} from "../contexts/cards/CardsContext";
@@ -92,6 +93,16 @@ function App() {
       .then(() => {
         setCards(cards.filter(element => element._id !== card._id))
       })
+      .catch(error => console.log(error));
+  }
+
+  function handleAddPlaceSubmit(cardInfo) {
+    api.addCard(cardInfo)
+      .then((data) => {
+        setCards([data, ...cards]);
+        closeAllPopups();
+      })
+      .catch(error => console.log(error));
   }
 
   function closeAllPopups() {
@@ -112,20 +123,11 @@ function App() {
                   onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards}/>
             <Footer/>
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-
-            <PopupWithForm title='Новое место' name='card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
-                           buttonText='Создать'>
-              <input type="text" name="title" required className="popup__input popup__input_text_name"
-                     id="card-name-input" placeholder="Название" minLength="2" maxLength="30"/>
-              <span className="popup__input-error name-input-error card-name-input-error"/>
-              <input type="url" name="link" required className="popup__input popup__input_text_info"
-                     id="card-link-input" placeholder="Ссылка на картинку"/>
-              <span className="popup__input-error info-input-error card-link-input-error"/>
-            </PopupWithForm>
-
+            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
             <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
             <PopupWithForm title='Вы уверены?' name='confirm' buttonText='Да'/>
-            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
+                             onUpdateAvatar={handleUpdateAvatar}/>
           </div>
         </div>
       </CardsContext.Provider>
