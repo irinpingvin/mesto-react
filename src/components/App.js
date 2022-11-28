@@ -5,6 +5,7 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from "./ImagePopup.js";
 import Footer from "./Footer";
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import {api} from '../utils/Api';
 import {CurrentUserContext} from '../contexts/currentUser/CurrentUserContext';
 import {CardsContext} from "../contexts/cards/CardsContext";
@@ -43,6 +44,15 @@ function App() {
 
   function handleUpdateUser(userInfo) {
     api.editUserInfo(userInfo)
+      .then(data => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(error => console.log(error));
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api.editUserAvatar(avatar)
       .then(data => {
         setCurrentUser(data);
         closeAllPopups();
@@ -114,15 +124,8 @@ function App() {
             </PopupWithForm>
 
             <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
-
             <PopupWithForm title='Вы уверены?' name='confirm' buttonText='Да'/>
-
-            <PopupWithForm title='Обновить аватар' name='avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
-                           buttonText='Сохранить'>
-              <input type="url" name="avatar" required className="popup__input popup__input_text_info"
-                     id="avatar-url-input" placeholder="Ссылка на картинку"/>
-              <span className="popup__input-error info-input-error avatar-url-input-error"/>
-            </PopupWithForm>
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
           </div>
         </div>
       </CardsContext.Provider>
