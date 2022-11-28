@@ -109,7 +109,7 @@ function App() {
             <Header/>
             <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
                   onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}
-                  onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
+                  onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards}/>
             <Footer/>
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
 
