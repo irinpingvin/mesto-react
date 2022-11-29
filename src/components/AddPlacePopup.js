@@ -12,9 +12,6 @@ function AddPlacePopup(props) {
       name,
       link,
     });
-
-    setName('');
-    setLink('');
   }
 
   function handleNameChange(e) {
@@ -25,8 +22,14 @@ function AddPlacePopup(props) {
     setLink(e.target.value);
   }
 
+  function onClose() {
+    props.onClose();
+    setName('');
+    setLink('');
+  }
+
   return (
-    <PopupWithForm title='Новое место' name='card' isOpen={props.isOpen} onClose={props.onClose}
+    <PopupWithForm title='Новое место' name='card' isOpen={props.isOpen} onClose={onClose}
                    onSubmit={handleSubmit} buttonText='Создать'>
       <input type="text" name="title" required className="popup__input popup__input_text_name"
              id="card-name-input" placeholder="Название" minLength="2" maxLength="30" value={name}
