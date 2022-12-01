@@ -26,6 +26,9 @@ function App() {
   });
   const [cards, setCards] = React.useState([]);
   const [cardForDelete, setCardForDelete] = React.useState(null);
+  const [cardSubmitButtonText, setCardSubmitButtonText] = React.useState('Создать');
+  const [profileSubmitButtonText, setProfileSubmitButtonText] = React.useState('Сохранить');
+  const [avatarSubmitButtonText, setAvatarSubmitButtonText] = React.useState('Сохранить');
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
@@ -54,21 +57,25 @@ function App() {
   }
 
   function handleUpdateUser(userInfo) {
+    setProfileSubmitButtonText('Сохранение...');
     api.editUserInfo(userInfo)
       .then(data => {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
+      .finally(() => setProfileSubmitButtonText('Сохранить'));
   }
 
   function handleUpdateAvatar(avatar) {
+    setAvatarSubmitButtonText('Сохранение...');
     api.editUserAvatar(avatar)
       .then(data => {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
+      .finally(() => setAvatarSubmitButtonText('Сохранить'));
   }
 
   function handleCardLike(card) {
@@ -105,12 +112,14 @@ function App() {
   }
 
   function handleAddPlaceSubmit(cardInfo) {
+    setCardSubmitButtonText('Создание...');
     api.addCard(cardInfo)
       .then((data) => {
         setCards([data, ...cards]);
         closeAllPopups();
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
+      .finally(() => setCardSubmitButtonText('Создать'));
   }
 
   function closeAllPopups() {
@@ -131,13 +140,15 @@ function App() {
                   onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}
                   onCardLike={handleCardLike} onCardDelete={handleCardDeleteClick} cards={cards}/>
             <Footer/>
-            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}
+                              submitButtonText={profileSubmitButtonText}/>
+            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}
+                           submitButtonText={cardSubmitButtonText}/>
             <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
             <PopupWithConfirmation isOpen={isConfirmPopupOpen} onClose={closeAllPopups} onConfirm={handleCardDelete}
                                    title='Вы уверены?' name='confirm' buttonText='Да'/>
             <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
-                             onUpdateAvatar={handleUpdateAvatar}/>
+                             onUpdateAvatar={handleUpdateAvatar} submitButtonText={avatarSubmitButtonText}/>
           </div>
         </div>
       </CardsContext.Provider>
